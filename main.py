@@ -354,9 +354,10 @@ def scan(access_token, api_endpoint):
             result = "%s visible at <https://www.google.com/maps?q=%s,%s|(%s, %s)>" % (pokemons[poke.pokemon.PokemonId - 1]['Name'], poke.Latitude, poke.Longitude, poke.Latitude, poke.Longitude)
             poke_list.append(result)
 
-        payload = {'text': "Pokemon scan results:\n\n %s" % ('\n'.join(poke_list))}
+        if len(poke_list) > 0:
+            payload = {'text': "Pokemon scan results:\n\n %s" % ('\n'.join(poke_list))}
+            notifier.notify(poke_list)
 
-        notifier.notify(poke_list)
         time.sleep(120)
 
 if __name__ == '__main__':
